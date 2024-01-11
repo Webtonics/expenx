@@ -9,7 +9,7 @@ Future<void> main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
   final path = await getApplicationDocumentsDirectory();
-   Hive.init(path.path);
+  Hive.init(path.path);
 
   //  final documentDir = await getApplicationDocumentsDirectory();
   // final documentDir = await Backend().getPath();

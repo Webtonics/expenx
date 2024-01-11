@@ -14,9 +14,9 @@ class _HomeViewState extends State<HomeView> {
   
   @override
   void initState() {
-   Hive.openBox("transaction").then((value){
+   Hive.openBox("transaction").then((box){
     setState(() {
-      transaction = value;
+      transaction = box;
     });
    }
    );
@@ -24,26 +24,47 @@ class _HomeViewState extends State<HomeView> {
    print('success');
     super.initState();
   }
+  void add(){
+    transaction!.put('transaction', '200');
+  }
+   get(){
+    final tran = transaction!.get('transaction');
+    return tran;
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text("EXPENX"),
+        title: const Text("EXPENX"),
       ),
-      // body: buildUi(),
-      body: Center(),
+      body: buildUi(),
+      // body: const Center(
+      //   child: Column(
+          
+      //   ),
+      // ),
     );
   }
 
-  // Widget buildUi(){
-  //   if (transaction == null) {
-  //     return CircularProgressIndicator();
-  //   }else{
-  //     return ValueListenableBuilder(
-  //       valueListenable: transaction!.listenable(), 
-  //       builder: (context, box, Widget){
-  //        return  Center();
-  //     });
-  //   }
-  // }
+  Widget buildUi(){
+    if (transaction == null) {
+      return const CircularProgressIndicator();
+    }else{
+      return ValueListenableBuilder(
+        valueListenable: transaction!.listenable(), 
+        builder: (context, box, Widget){
+         return   Center(
+          child: Column(
+            children: [
+              Text(get().toString()),
+              ElevatedButton(onPressed: (){
+                add();
+              }, child: Text("TEST"))
+            ],
+          ),
+
+         );
+      });
+    }
+  }
 }
