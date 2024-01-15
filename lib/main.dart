@@ -10,17 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final path = await getApplicationDocumentsDirectory();
   Hive.init(path.path);
-
-  //  final documentDir = await getApplicationDocumentsDirectory();
-  // final documentDir = await Backend().getPath();
-  
-  // Backend().initHive(documentDir.toString());
-
-  //  final  box = Hive.box('transaction');
-  // // Backend().openBox();
-  // await box.put('Income', 200);
-  // // await Backend().viewAction('income');
-  // Hive.openBox("Records");
   runApp(const MyApp());
 }
 
@@ -42,7 +31,7 @@ class MyApp extends StatelessWidget {
 
 class InitApp extends StatelessWidget {
   const InitApp({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return const HomeView();
