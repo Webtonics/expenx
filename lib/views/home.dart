@@ -10,50 +10,25 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final transaction =  Hive.openBox('transaction');
-
+   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
-  //  Hive.openBox("wallet").then((box){
-  //   setState(() {
-  //     transaction = box;
-  //   });
-  //  }
-  
-  //  );
-   
-   print('success');
+    _controller = TextEditingController();
     super.initState();
   }
-  
-  // Future<void> add( double amount, bool isIncome)async{
-  //   if (isIncome = true) {
-  //       wallet = wallet + amount;
-  //       transaction!.put('wallet', wallet);
-     
-  //   }else{
-  //     setState(() async {
-  //       wallet = wallet - amount;
-  //       await transaction!.put('wallet', wallet);
-  //     });
-  //   }
-  // }
-
-  
-  //  get(){
-  //   final tran = transaction!.get('wallet');
-  //   return tran;
-  // }
-  // void update(){
-  //   // transaction!.put('transaction', value)
-  // }
-
+  @override
+  void dispose() {
+    _controller.dispose();
+    Hive.close();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return  FutureBuilder(
       future:  Hive.openBox('transaction'),
       builder: (context, snapshot){
          
-          final transaction = snapshot.data;
+          // final transaction = snapshot.data;
           
             //make it listenable
           Widget buildUi(){
@@ -69,25 +44,31 @@ class _HomeViewState extends State<HomeView> {
             // body: buildUi(),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Center(child: Column(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(data.toString()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(onPressed: (){
-                        transaction.put('first',wallet + 28.0);
+                        transaction.put('first',wallet +double.parse(_controller.text));
                       }, icon: const Icon(Icons.add)),
                       IconButton(onPressed: (){
-                        transaction.put('first',wallet - 28.0);
+                        transaction.put('first',wallet - double.parse(_controller.text));
                       }, icon: const Icon(Icons.remove)),
                     ],
+                  ),
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(onPressed: (){
-                      transaction.put('first',wallet+ 12.0);
+                      transaction.put('first',wallet );
                       // transaction.watch();
                     }, child: const Text("start")),
                   ElevatedButton(onPressed: (){
