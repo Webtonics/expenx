@@ -27,16 +27,12 @@ class _HomeViewState extends State<HomeView> {
    print('success');
     super.initState();
   }
-  // Future<void> initwallet()async{
-  //   await transaction!.put('wallet', wallet);
-  // }
+  
   // Future<void> add( double amount, bool isIncome)async{
-  // //  transaction!.put('transaction', '200');
   //   if (isIncome = true) {
-  //     setState(()async {
   //       wallet = wallet + amount;
   //       transaction!.put('wallet', wallet);
-  //     });
+     
   //   }else{
   //     setState(() async {
   //       wallet = wallet - amount;
@@ -44,6 +40,8 @@ class _HomeViewState extends State<HomeView> {
   //     });
   //   }
   // }
+
+  
   //  get(){
   //   final tran = transaction!.get('wallet');
   //   return tran;
@@ -51,19 +49,28 @@ class _HomeViewState extends State<HomeView> {
   // void update(){
   //   // transaction!.put('transaction', value)
   // }
+  
+  // Future <void> increase(){
+
+  // }
   @override
   Widget build(BuildContext context) {
     // initwallet();
     return  FutureBuilder(
       future:  Hive.openBox('transaction'),
       builder: (context, snapshot){
-        final transaction = snapshot.data;
-
+         
+      final transaction = snapshot.data;
+        //make it listenable
         Widget buildUi(){
         return WatchBoxBuilder(box: Hive.box('transaction'), builder: (context, transaction){
-        final data = transaction.get('first');
+        final data = transaction.get('first', defaultValue: 0.00 );
         return Text(data.toString());
+
+
     });
+   
+      
   }
         if (snapshot.hasData) {
         return Scaffold(
